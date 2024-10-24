@@ -8,9 +8,6 @@ section	.text code align=64
 
 global	curve25519_donna_x64
 
-# donna function.
-# linux arguments: RDI, RSI, RDX
-# windows arguments: RCX, RDX, R8
 curve25519_donna_x64:
 $L$FB13:
 	push	r15
