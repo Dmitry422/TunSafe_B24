@@ -303,7 +303,9 @@ void DnsResolver::ClearCache() {
 }
 
 bool DnsResolver::Resolve(const char *hostname, IpAddr *result) {
-  static const uint8 retry_delays[] = {1, 2, 3, 5, 10, 20, 40, 60, 120, 180, 255};
+  //static const uint8 retry_delays[] = {1, 2, 3, 5, 10, 20, 40, 60, 120, 180, 255};
+  // my version
+  static const uint8 retry_delays = 10;
   char buf[kSizeOfAddress];
 
   retry_attempt_ = 0;
@@ -337,13 +339,14 @@ bool DnsResolver::Resolve(const char *hostname, IpAddr *result) {
     }
     if (token_.is_cancelled())
       return false;
-
-    RINFO("Unable to resolve %s. Trying again in %d second(s)", hostname, retry_delays[retry_attempt_]);
-    if (!InterruptibleSleep(retry_delays[retry_attempt_] * 1000, &token_))
+    // my version
+    // RINFO("Unable to resolve %s. Trying again in %d second(s)", hostname, retry_delays[retry_attempt_]);
+    RINFO("Unable to resolve %s. Trying again in %d second(s)", hostname, retry_delays);
+    if (!InterruptibleSleep(retry_delays * 1000, &token_))
       return false;
 
-    if (retry_attempt_ != ARRAY_SIZE(retry_delays) - 1)
-      retry_attempt_++;
+    // if (retry_attempt_ != ARRAY_SIZE(retry_delays) - 1)
+    //  retry_attempt_++;
   }
 }
 
