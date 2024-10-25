@@ -649,7 +649,7 @@ void WireguardProcessor::SendHandshakeInitiation(WgPeer *peer) {
     udp_->WriteUdpPacket(packet);
     // if (attempts > 1 && attempts <= 20)
       RINFO("Retrying handshake, attempt %d...%s", attempts, (attempts == 20) ? " (last notice)" : "");
-  //}
+  }
 }
 
 bool WireguardProcessor::IsMainThreadPacket(Packet *packet) {
